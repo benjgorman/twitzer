@@ -1,0 +1,142 @@
+/* CSS Reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+:focus {
+	outline: 0;
+}
+
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Josh Collie */
+
+
+body
+{
+	background: #EEE;
+	color: #232323;
+	font: normal 10px/10px Arial, Helvetica, sans-serif;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+h1, h2, h3, h4, h5
+{
+	font-size: 1.2em;
+	font-weight: normal;
+	line-height: 30px;
+}
+
+a:link, a:visited, a:active
+{
+	color: #666;
+}
+
+a:hover
+{
+	color: #282828;
+}
+
+h1
+{
+	border: none;
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 3.2em;
+	line-height: 1.7em; 
+	margin: 30px 0 30px 0;
+	text-align: left;
+	width: auto;
+}
+
+h2
+{
+	border-bottom: 1px solid #EBEBEB;
+	border-top: 2px solid #232323;
+	color: #232323;
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 40px;
+	margin: 20px 0;
+	padding: 0;
+	width: 100%;
+}
+
+h3
+{
+	color: #656565;
+	float: left;
+	font-size: 1.3em;
+	font-weight: bold;
+	height: 30px;
+}
+
+h4
+{
+	color: #999;
+	float: right;
+	font-size: 14px;
+}
+
+p
+{
+	color: #383838;
+	font-size: 1.4em;
+	float: left;
+	text-align: left;
+	line-height: 24px;
+}
+
+label
+{
+	color: #383838;
+	float: left;
+	font-size: 14px;
+	text-align: left;
+	line-height: 24px;
+	width: 80px;
+}
