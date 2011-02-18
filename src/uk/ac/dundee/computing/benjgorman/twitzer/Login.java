@@ -136,7 +136,12 @@ public class Login extends HttpServlet
 	            System.out.println(url);
 	            response.sendRedirect(url);
 	        }
-	        else 
+	        else if (op.equals("Logout"))
+	        {
+	        	request.getSession().invalidate();
+	        	response.sendRedirect("/Twitzer/index.jsp");
+	        }
+	        else
 	        {
 	            throw new ServletException("Unsupported OP: " + op);
 	        }

@@ -1,6 +1,5 @@
 package uk.ac.dundee.computing.benjgorman.twitzer.connectors;
 
-import uk.ac.dundee.computing.benjgorman.twitzer.stores.*;
 import uk.ac.dundee.computing.benjgorman.twitzer.utils.*;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.*;
@@ -21,7 +20,7 @@ public class FollowConnector
 		
 	}
 	
-	public Boolean addFollow(AuthorStore authorStore)
+	public Boolean Follow(String userName, String toFollow)
 	{
 		Cluster c;
 		try
@@ -44,83 +43,20 @@ public class FollowConnector
 			StringSerializer ss = StringSerializer.get();
 			
 			Mutator<String> mutator = HFactory.createMutator(ks, ss);
-			mutator.insert(authorStore.getuserName(), "TwitIndex", HFactory.createStringColumn("email", authorStore.getEmail()));
+			
+			Long timeNow = System.currentTimeMillis();
+			
+			mutator.insert(userName, "Following", HFactory.createStringColumn(toFollow, timeNow.toString()));
 			
 			mutator = HFactory.createMutator(ks, ss);
-			
-			
-			mutator.addInsertion(authorStore.getEmail(), "Twit",
-																HFactory.createStringColumn("name", authorStore.getname()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("username", authorStore.getuserName()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("avatar", authorStore.getAvatar()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("address", authorStore.getAddress()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("bio", authorStore.getBio()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("tel", authorStore.getTel()));
-			
-			mutator.execute();
-			
-			System.out.println(authorStore.getuserName());
-			
+					
+			mutator.insert(toFollow, "FollowedBy", HFactory.createStringColumn(userName, timeNow.toString()));
+		
 			return true;
-			
 		
 		}
 		catch(Exception e)
 		{
-			
-			System.out.println(e);
-			return false;
-		}
-		
-	}
-	
-	public Boolean unFollow(AuthorStore authorStore)
-	{
-		Cluster c;
-		try
-		{
-			c=CassandraHosts.getCluster();
-		}
-		catch (Exception et)
-		{
-			System.out.println("Uh oh something went wrong."+et);
-			return false;
-		}
-		
-		try
-		{
-
-			ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
-			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2
-			ks.setConsistencyLevelPolicy(mcl);
-			
-			StringSerializer ss = StringSerializer.get();
-			
-			Mutator<String> mutator = HFactory.createMutator(ks, ss);
-			mutator.insert(authorStore.getuserName(), "TwitIndex", HFactory.createStringColumn("email", authorStore.getEmail()));
-			
-			mutator = HFactory.createMutator(ks, ss);
-			
-			
-			mutator.addInsertion(authorStore.getEmail(), "Twit",
-																HFactory.createStringColumn("name", authorStore.getname()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("username", authorStore.getuserName()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("avatar", authorStore.getAvatar()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("address", authorStore.getAddress()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("bio", authorStore.getBio()))
-					.addInsertion(authorStore.getEmail(), "Twit", HFactory.createStringColumn("tel", authorStore.getTel()));
-			
-			mutator.execute();
-			
-			System.out.println(authorStore.getuserName());
-			
-			return true;
-			
-		
-		}
-		catch(Exception e)
-		{
-			
 			System.out.println(e);
 			return false;
 		}
@@ -143,7 +79,6 @@ public class FollowConnector
 		
 		ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
 		StringSerializer ss = StringSerializer.get();
-		
 		
 		try
 		{

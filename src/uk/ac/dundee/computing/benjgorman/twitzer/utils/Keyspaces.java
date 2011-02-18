@@ -63,6 +63,22 @@ public final class Keyspaces {
 				cfDef = new ThriftCfDef(cf); 
 				cfs.add(cfDef);
 				
+				cf = new BasicColumnFamilyDefinition(); 
+				
+				cf.setName("Following");
+				cf.setKeyspaceName("Twitzer");
+				cf.setComparatorType(ComparatorType.BYTESTYPE);
+				cfDef = new ThriftCfDef(cf); 
+				cfs.add(cfDef);
+				
+				cf = new BasicColumnFamilyDefinition(); 
+				
+				cf.setName("FollowedBy");
+				cf.setKeyspaceName("Twitzer");
+				cf.setComparatorType(ComparatorType.BYTESTYPE);
+				cfDef = new ThriftCfDef(cf); 
+				cfs.add(cfDef);
+				
 				
 				KeyspaceDefinition ks=HFactory.createKeyspaceDefinition("Twitzer","org.apache.cassandra.locator.SimpleStrategy", 1, cfs);
 				c.addKeyspace(ks);

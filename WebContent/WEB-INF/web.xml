@@ -17,7 +17,7 @@
     <description></description>
     <display-name>Follow</display-name>
     <servlet-name>Follow</servlet-name>
-    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Unfollow</servlet-class>
+    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Follow</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Follow</servlet-name>

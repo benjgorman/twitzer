@@ -7,6 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Display Single Author</title>
+<jsp:useBean id="User"
+class="uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore"
+scope="session"
+></jsp:useBean>
+<jsp:useBean id="Follow"
+class="uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore"
+scope="session"
+></jsp:useBean>
 </head>
 <body>
 
@@ -34,9 +42,15 @@ NumPosts: <%=Author.getnumPosts() %>
 	<% 
 }
 %>
+<%
+session=request.getSession(); 
+session.setAttribute("Username", Author.getuserName());  %>
 <%-- 
 <p>List all <a href="/jBloggyAppy/"+<%=Author.getname()%>>Subscriptions</a></p>
 --%>
-<p><a href="/Twitzer/Author">Return to Authors list</a></p>
+<form action="/Twitzer/Follow/<%=Author.getuserName() %>" method="POST">
+<input type="submit"  value="Follow">
+</form>
+<p><a href="/Twitzer/Follow/<%=Author.getuserName() %>">Follow</a></p>
 </body>
 </html>

@@ -16,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 
 import uk.ac.dundee.computing.benjgorman.twitzer.connectors.*;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore;
+import uk.ac.dundee.computing.benjgorman.twitzer.stores.FollowStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 
 /**
@@ -150,19 +151,20 @@ public class Author extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		// TODO Auto-generated method stub
 		AuthorStore Author =new AuthorStore();
 		RequestDispatcher rd;
 		HttpSession session=request.getSession();
-		
+
 		UserStore lc =(UserStore)session.getAttribute("User");
-		
+
 		if (lc==null)
 		{
 			rd=request.getRequestDispatcher("RegisterUser.jsp");
 			rd.forward(request,response);
 		}
-		
+
 		Author.setemailName(lc.getemail());
 		Author.setname(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Name")));
 		Author.setAddress(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Website")));
@@ -170,10 +172,10 @@ public class Author extends HttpServlet
 		Author.setUserName(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Username")));
 		Author.setBio(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Bio")));
 		Author.setTel(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Tel")));
-		
+
 		UserConnector au = new UserConnector();
 
-		
+
 		if (au.addAuthor(Author)== true)
 		{
 			lc.setloggedIn(Author.getname(), Author.getEmail(), Author.getAvatar(), Author.getuserName());
@@ -184,6 +186,7 @@ public class Author extends HttpServlet
 			rd=request.getRequestDispatcher("RegisterUser.jsp");
 			rd.forward(request,response);
 		}
+
 
 	}
 
