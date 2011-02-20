@@ -3,13 +3,13 @@ package uk.ac.dundee.computing.benjgorman.twitzer.stores;
 public class AuthorStore
 {
 	private long numPosts;
-	private String name;
-	private String userName;
-	private String email;
-	private String bio;
-	private String avatar;
-	private String webUrl;
-	private String tel;
+	private String name ="";
+	private String userName ="";
+	private String email ="";
+	private String bio ="";
+	private String avatar ="";
+	private String webUrl = "";
+	private String tel ="";
 	
 	public AuthorStore()
 	{

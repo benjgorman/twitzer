@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Unfollow
  */
 @WebServlet("/Unfollow")
-public class Unfollow extends HttpServlet {
+public class Unfollow extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Unfollow() {
+    public Unfollow()
+    {
         super();
         // TODO Auto-generated constructor stub
     }

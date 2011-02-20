@@ -6,20 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <title>Display Single Author</title>
 <jsp:useBean id="User"
 class="uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore"
-scope="session"
-></jsp:useBean>
-<jsp:useBean id="Follow"
-class="uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore"
 scope="session"
 ></jsp:useBean>
 </head>
 <body>
 
 <% 
-
+Boolean following = false;
 System.out.println("In RenderAuthor.jsp");
 AuthorStore Author = (AuthorStore)request.getAttribute("Author");
 
@@ -39,18 +36,43 @@ Email:	<%=Author.getEmail() %>  <br/>
 Telephone:  <%=Author.getTel() %>  <br/>
 Bio: <%=Author.getBio() %>  <br/>
 NumPosts: <%=Author.getnumPosts() %>
-	<% 
+<% 
 }
 %>
-<%
-session=request.getSession(); 
-session.setAttribute("Username", Author.getuserName());  %>
-<%-- 
-<p>List all <a href="/jBloggyAppy/"+<%=Author.getname()%>>Subscriptions</a></p>
---%>
-<form action="/Twitzer/Follow/<%=Author.getuserName() %>" method="POST">
-<input type="submit"  value="Follow">
-</form>
-<p><a href="/Twitzer/Follow/<%=Author.getuserName() %>">Follow</a></p>
+
+<%if (following == true)
+{ %>
+<button id="follow">Follow</button>
+<%}
+else
+{ %>
+<button id="unfollow">Unfollow</button>
+<%}%>
 </body>
+<script>
+$("#follow").click(function () {
+	$.ajax({
+		aysnc: true,
+			type: "POST",
+			url: "/Twitzer/Follow/<%= Author.getuserName() %>",
+			dataType: "text",
+			success: function(msg)
+			{
+				location.reload(); 
+			}
+	});
+	});
+$("#unfollow").click(function () {
+	$.ajax({
+		aysnc: true,
+			type: "POST",
+			url: "/Twitzer/Unfollow/<%= Author.getuserName() %>",
+			dataType: "text",
+			success: function(msg)
+			{
+				location.reload(); 
+			}
+	});
+	});
+</script>
 </html>

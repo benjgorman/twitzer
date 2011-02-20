@@ -44,42 +44,33 @@ public class Author extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		request.setAttribute("ViewUser", null);
-		// TODO Auto-generated method stub
-		//Possible Call Methods:
-		//case 2
-		// /jBloggyAppy/Author List all Authors and redirect to jsp
-		// case 3
-		// /jBloggyAppy/Author/xml return all authors as XML (not implemented)
-		// /jBloggyAppy/Author/rss return all authors as RSS (not implemented)
-		// /jBloggyAppy/Author/json return all authors as JSON (not implemented)
-		// /jBloggyAppy/Author/name return author and redirect to jsp
-		//case 4
-		// /jBloggyAppy/Author/name/xml return author and return xml (not implemented)
-		// /jBloggyAppy/Author/name/rss return author and return rss (not implemented)
-		// /jBloggyAppy/Author/name/json return author and return json 
-
+		
 		String args[]=SplitRequestPath(request);
 
 		switch (args.length){
 
-			case 2:  System.out.println("ALL AUTHORS");
+			case 2: System.out.println("ALL AUTHORS");
 					break;
-			case 3: if (FormatsMap.containsKey(args[2])){ //all authors in a format
+			case 3: if (FormatsMap.containsKey(args[2]))
+			{
 					Integer IFormat= (Integer)FormatsMap.get(args[2]);
 					 
-					switch((int)IFormat.intValue())
-					{
-					 
-						 case 3:System.out.println("TEST");
-						 		break;
-						 default:break;
+						switch((int)IFormat.intValue())
+						{
+						 
+							 case 3:System.out.println("TEST");
+							 		break;
+							 default:break;
+						}
 					}
-					}else
-					{ //Must be a single Author request
+			else
+			{ //Must be a single Author request
 						System.out.println("Call return Author");
-						 ReturnAuthor(request, response,0,args[2]);
-					}
-					break;
+						ReturnAuthor(request, response,0,args[2]);
+						break;
+			}
+			break;
+			
 			case 4: if (FormatsMap.containsKey(args[3]))
 			{ //all authors in a format
 						Integer IFormat= (Integer)FormatsMap.get(args[3]);

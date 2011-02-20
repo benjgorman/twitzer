@@ -19,7 +19,6 @@ scope="session"
 
 <h3>Twitzer</h3>
 
-
 <h3> <%if (User.isloggedIn()==true)%><%=User.getUsername() %> </h3>
 <h3> <%if (User.isloggedIn()==true)%><%=User.getNumPosts() %> </h3>
 <%if (User.isloggedIn()==true) {%> <img src=<%=User.getAvatar() %> alt="<%=User.getUsername() %>" height=40pixels width=40pixels/><%} %>

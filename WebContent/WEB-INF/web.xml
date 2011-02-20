@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>Counter</display-name>
+  <display-name>Twitzer</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -13,6 +13,17 @@
     <error-code>404</error-code>
     <location>/404.jsp</location>
   </error-page>
+  <servlet>
+    <description></description>
+    <display-name>Follows</display-name>
+    <servlet-name>Follows</servlet-name>
+    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Follows</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Follows</servlet-name>
+    <url-pattern>/Follows</url-pattern>
+    <url-pattern>/Follows/*</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Follow</display-name>

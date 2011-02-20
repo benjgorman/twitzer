@@ -25,18 +25,23 @@ public final class Keyspaces {
 			ColumnFamilyDefinition cfDef = HFactory.createColumnFamilyDefinition("BloggyAppy", "DynCf");
 		}catch(Exception et){
 			
-			System.out.println("Can't create ColumnFamily "+et);
+			System.out.println("I can't actually create that ColumnFamily right now, heres why: "+et);
 		}
 	}
-	public static void SetUpKeySpaces(Cluster c){
-		try{
-			try{
+	public static void SetUpKeySpaces(Cluster c)
+	{
+		try
+		{
+			try
+			{
 				KeyspaceDefinition kd =c.describeKeyspace("Twitzer");
 				System.out.println("Keyspace: "+kd.getName());
 				System.out.println("Replication: "+kd.getReplicationFactor());
 				System.out.println("Strategy: "+kd.getStrategyClass());
-			}catch(Exception et){
-				System.out.println("Keyspace probably doesn't exist, tryping to create it"+et);
+			}
+			catch(Exception et)
+			{
+				System.out.println("You have probably been a bit of a spoon and not created your keyspace. Don't worry I'll do it for you."+et);
 				List<ColumnFamilyDefinition> cfs = new ArrayList<ColumnFamilyDefinition>(); 
 				
 				BasicColumnFamilyDefinition cf = new BasicColumnFamilyDefinition(); 
@@ -79,24 +84,28 @@ public final class Keyspaces {
 				cfDef = new ThriftCfDef(cf); 
 				cfs.add(cfDef);
 				
-				
 				KeyspaceDefinition ks=HFactory.createKeyspaceDefinition("Twitzer","org.apache.cassandra.locator.SimpleStrategy", 1, cfs);
 				c.addKeyspace(ks);
-				System.out.println("Keyspace created ?");
-				try{
+				System.out.println("I reckon that Keyspace was created.");
+				try
+				{
 					KeyspaceDefinition kd =c.describeKeyspace("Twitzer");
 					System.out.println("Keyspace: "+kd.getName());
 					System.out.println("Replication: "+kd.getReplicationFactor());
 					System.out.println("Strategy: "+kd.getStrategyClass());
-				}catch(Exception et2){
-					System.out.println("Opps no it wasn't !" +et2);
+				}
+				catch(Exception et2)
+				{
+					System.out.println("Scrap my last, keyspace wasn't created!" +et2);
 				}
 				
 			}
 			
 			
-		}catch(Exception et){
-			System.out.println("Other keyspace or coulm definition error" +et);
+		}
+		catch(Exception et)
+		{
+			System.out.println("Really have no idea what happened, keyspace or column error." +et);
 		}
 		
 	}
