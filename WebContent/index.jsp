@@ -23,6 +23,10 @@ scope="session"
 <h3> <%if (User.isloggedIn()==true)%><%=User.getNumPosts() %> </h3>
 <%if (User.isloggedIn()==true) {%> <img src=<%=User.getAvatar() %> alt="<%=User.getUsername() %>" height=40pixels width=40pixels/><%} %>
 
+<form id="tweet" action="/Twitzer/Tweet"> 
+<textarea placeholder="whats happening?"></textarea>
+<input type="submit" value="Tweet"/>
+</form>
 	<hr></hr>
 
 </body>

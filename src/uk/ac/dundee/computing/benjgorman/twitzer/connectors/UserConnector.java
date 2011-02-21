@@ -134,7 +134,7 @@ public class UserConnector
 		}
 		else
 		{
-			AuthorStore Au=new AuthorStore();
+			AuthorStore Au = new AuthorStore();
 			Cluster c; //V2
 			
 			try

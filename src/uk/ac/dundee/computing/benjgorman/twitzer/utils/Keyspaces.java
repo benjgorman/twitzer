@@ -84,6 +84,22 @@ public final class Keyspaces {
 				cfDef = new ThriftCfDef(cf); 
 				cfs.add(cfDef);
 				
+				cf = new BasicColumnFamilyDefinition(); 
+				
+				cf.setName("AllTweets");
+				cf.setKeyspaceName("Twitzer");
+				cf.setComparatorType(ComparatorType.BYTESTYPE);
+				cfDef = new ThriftCfDef(cf); 
+				cfs.add(cfDef);
+				
+				cf = new BasicColumnFamilyDefinition(); 
+				
+				cf.setName("UserTweets");
+				cf.setKeyspaceName("Twitzer");
+				cf.setComparatorType(ComparatorType.BYTESTYPE);
+				cfDef = new ThriftCfDef(cf); 
+				cfs.add(cfDef);
+				
 				KeyspaceDefinition ks=HFactory.createKeyspaceDefinition("Twitzer","org.apache.cassandra.locator.SimpleStrategy", 1, cfs);
 				c.addKeyspace(ks);
 				System.out.println("I reckon that Keyspace was created.");

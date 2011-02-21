@@ -120,6 +120,7 @@ public class Login extends HttpServlet
 	            {
 	            	response.sendRedirect("/Twitzer/Login.jsp");
 	            }
+	            
 	            response.setContentType("text/html; charset=UTF-8");
 	            showAuthentication(request,response, authentication);
 	            return;
@@ -135,11 +136,6 @@ public class Login extends HttpServlet
 	            String url = manager.getAuthenticationUrl(endpoint, association);
 	            System.out.println(url);
 	            response.sendRedirect(url);
-	        }
-	        else if (op.equals("Logout"))
-	        {
-	        	request.getSession().invalidate();
-	        	response.sendRedirect("/Twitzer/index.jsp");
 	        }
 	        else
 	        {
@@ -168,69 +164,49 @@ public class Login extends HttpServlet
 		}
 		String Email=auth.getEmail();
 		lc.setloggedIn(auth.getFullname(),Email, null, null);
-		System.out.println("Login "+lc.getname());
+		System.out.println("Login "+lc.getemail());
+		
 		//Check to see if user is registered,  You can login but not be registered
 		UserConnector au = new UserConnector();
 		
-		RequestDispatcher rd=null;
 		AuthorStore ars=au.getAuthorFromEmail(Email);
-		if (ars.getname()== null)
+		System.out.println("LOOK HERE !!!!!!!!!!!!!!!: " + ars.getuserName());
+		
+		
+		if (ars == null || ars.getuserName() == "")
 		{
 			System.out.println("Not Registered");
 			System.out.flush();
-			rd=request.getRequestDispatcher("RegisterUser.jsp");
-			
 			try
 			{
-				rd.forward(request,response);
+				response.sendRedirect("RegisterUser.jsp");
 			}
 			catch(Exception et)
 			{
 				System.out.println("Can't forward in login servlet"+et);
 			}
 		}
-		
-		//Now we are logged in and registered then we can set them both
-		lc.setloggedIn(ars.getname(),Email, ars.getAvatar(), ars.getuserName());
-		System.out.println("Login "+lc.getname());
-
-		//System.out.println(request.getContextPath());
-
-		ReturnStore Ret = (ReturnStore)session.getAttribute("ReturnPoint");
-
-
-		if (Ret !=null)
-		{
-			System.out.println("Return to "+Ret.getreturnTo());
-			rd=request.getRequestDispatcher(Ret.getreturnTo());
-		}
 		else
 		{
-			rd=request.getRequestDispatcher("index.jsp");
+		
+			//Now we are logged in and registered then we can set them both
+			lc.setloggedIn(ars.getname(),Email, ars.getAvatar(), ars.getuserName());
+			System.out.println("Login "+lc.getname());
+	
+			//System.out.println(request.getContextPath());
+			//String returnTo = (String)session.getAttribute("ReturnPoint");
+			
+			try
+			{
+				response.sendRedirect("index.jsp");
+		
+			}
+			catch(Exception et)
+			{
+				System.out.println("Can't forward in login servlet"+et);
+			}
 		}
 
-		try
-		{
-			//rd.forward(request,response);
-			response.sendRedirect("index.jsp");
-		}
-		catch(Exception et)
-		{
-			System.out.println("Can't forward in login servlet"+et);
-		}
-
-		/*
-        pw.print("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Test JOpenID</title></head><body><h1>You have successfully signed on!</h1>");
-        pw.print("<p>Identity: " + auth.getIdentity() + "</p>");
-        pw.print("<p>Email: " + auth.getEmail() + "</p>");
-        pw.print("<p>Full name: " + auth.getFullname() + "</p>");
-        pw.print("<p>First name: " + auth.getFirstname() + "</p>");
-        pw.print("<p>Last name: " + auth.getLastname() + "</p>");
-        pw.print("<p>Gender: " + auth.getGender() + "</p>");
-        pw.print("<p>Language: " + auth.getLanguage() + "</p>");
-        pw.print("</body></html>");
-        pw.flush();
-        */
     }
 
     void checkNonce(String nonce) 

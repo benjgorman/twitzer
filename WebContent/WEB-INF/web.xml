@@ -15,6 +15,17 @@
   </error-page>
   <servlet>
     <description></description>
+    <display-name>Tweet</display-name>
+    <servlet-name>Tweet</servlet-name>
+    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Tweet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Tweet</servlet-name>
+    <url-pattern>/Tweet</url-pattern>
+    <url-pattern>/Tweet/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>Follows</display-name>
     <servlet-name>Follows</servlet-name>
     <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Follows</servlet-class>
