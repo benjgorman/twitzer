@@ -11,6 +11,7 @@
 <div>
 <%@include file="LogCheck.jsp" %>
 <P>Fill in the form to register <%= User.getemail()%></P>
+
 <form action="/Twitzer/Author" method="POST">
 
 Name:<input name="Name" value="<%= User.getname() %>"></input><br/>
