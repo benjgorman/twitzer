@@ -43,48 +43,47 @@ public class Author extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		request.setAttribute("ViewUser", null);
-		
-		String args[]=SplitRequestPath(request);
+		String args[]= SplitRequestPath(request);
 
-		switch (args.length){
-
-			case 2: System.out.println("ALL AUTHORS");
-					break;
-			case 3: if (FormatsMap.containsKey(args[2]))
-			{
+		switch (args.length)
+		{
+			case 3:
+				if (FormatsMap.containsKey(args[2])) 
+				{
 					Integer IFormat= (Integer)FormatsMap.get(args[2]);
-					 
+					HttpSession session=request.getSession();
+					UserStore sessionUser = (UserStore)session.getAttribute("User");
+					
+					if (sessionUser != null && sessionUser.isloggedIn() == true)
+					{
 						switch((int)IFormat.intValue())
 						{
-						 
-							 case 3:System.out.println("TEST");
+							case 3:ReturnAuthor(request, response,3,sessionUser.getUsername()); //Only JSON implemented for now
+							break;
+						}
+	
+					}
+				}
+				break;
+	
+			case 4: 
+				if (FormatsMap.containsKey(args[3]))
+				{ //all users
+							Integer IFormat= (Integer)FormatsMap.get(args[3]);
+							
+							switch((int)IFormat.intValue())
+							{
+								case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON
 							 		break;
-							 default:break;
-						}
-					}
-			else
-			{ //Must be a single Author request
-						System.out.println("Call return Author");
-						ReturnAuthor(request, response,0,args[2]);
-						break;
-			}
-			break;
-			
-			case 4: if (FormatsMap.containsKey(args[3]))
-			{ //all authors in a format
-						Integer IFormat= (Integer)FormatsMap.get(args[3]);
-						switch((int)IFormat.intValue()){
-						case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON implemented for now
-					 		break;
-						default:break;
-						}
-					}
-					break;
-			default: System.out.println("Wrong number of arguements in doGet Author "+request.getRequestURI()+" : "+args.length);
-					break;
+								default:
+									break;
+							}
+				}
+				break;
+			default: 
+				System.out.println("Wrong number of arguements in doGet Author "+request.getRequestURI()+" : "+args.length);
+				break;
 		}
-
 
 		
 	}
