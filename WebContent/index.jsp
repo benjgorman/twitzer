@@ -25,6 +25,7 @@ scope="session"
 <%if (User.isloggedIn()==true) {%> <img src=<%=User.getAvatar() %> alt="<%=User.getUsername() %>" height=40pixels width=40pixels/><%} %>
 
 <form id="tweet" action="/Twitzer/Tweet" method="POST"> 
+
 <textarea name="Content" placeholder="whats happening?"></textarea>
 <input type="submit" value="Tweet"/>
 </form>

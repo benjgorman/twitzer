@@ -371,16 +371,60 @@ public class FollowConnector
 		}
 	}
 
-	public boolean removeFollower(String userName, String toFollow) 
+	public boolean removeFollower(String toFollow, String toBeFollowed)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		Cluster c; //V2
+		try
+		{
+			c=CassandraHosts.getCluster();
+		}
+		catch (Exception et)
+		{
+			System.out.println("" + et);
+			return false;
+		}
+		try
+		{
+			ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
+			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2
+			ks.setConsistencyLevelPolicy(mcl);
+			StringSerializer se = StringSerializer.get();
+			Mutator<String> mutator = HFactory.createMutator(ks,se);
+			mutator.delete(toBeFollowed, "FollowedBy", toFollow, se);
+			mutator.execute();
+			return true;
+		}
+		catch (Exception et)
+		{
+			System.out.println(""+et);
+			return false;
+		}
 	}
 
-	public boolean removeFollowee(String userName, String toFollow) 
+	public boolean removeFollowee(String toFollow, String toBeFollowed)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		Cluster c; //V2
+		try
+		{
+			c=CassandraHosts.getCluster();
+		}
+		catch (Exception et){
+			System.out.println("Whoops! "+et);
+			return false;
+		}
+		try{
+			ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
+			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2
+			ks.setConsistencyLevelPolicy(mcl);
+			StringSerializer se = StringSerializer.get();
+			Mutator<String> mutator = HFactory.createMutator(ks,se);
+			mutator.delete(toFollow, "Following", toBeFollowed, se);
+			mutator.execute();
+			return true;
+		}catch (Exception et){
+			System.out.println(""+et);
+			return false;
+		}
 	}
 	
 }

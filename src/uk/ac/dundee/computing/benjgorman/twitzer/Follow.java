@@ -228,7 +228,6 @@ public class Follow extends HttpServlet
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		System.out.println("Test Success");
-		RequestDispatcher rd;
 		HttpSession session=request.getSession();
 		
 		UserStore us =(UserStore)session.getAttribute("User");
