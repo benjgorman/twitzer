@@ -10,10 +10,21 @@ public class AuthorStore
 	private String avatar ="";
 	private String webUrl = "";
 	private String tel ="";
+	private Boolean following = false;
 	
 	public AuthorStore()
 	{
 	
+	}
+	
+	public void setFollowing(Boolean following)
+	{
+		this.following=following;
+	}
+	
+	public Boolean getFollowing()
+	{
+		return following;
 	}
 	
 	public long getnumPosts()

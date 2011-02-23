@@ -29,15 +29,16 @@ scope="session"
 <input type="submit" value="Tweet"/>
 </form>
 <hr></hr>
-<div id="images"></div>
+<div id="tweets"></div>
 <script>
-$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?",
-        function(data){
-          $.each(data.items, function(i,item){
-            $("<img/>").attr("src", item.media.m).appendTo("#images");
-            if ( i == 3 ) return false;
-          });
-        });
+$.getJSON('/Twitzer/Tweet/json', function(json) {
+
+	$.each(json.Data, function(i, Data) {
+		
+		$("#tweets").append('<h3>' + this.Twit + this.Content + '</h3>'); 
+
+	  });
+	});
 </script>
 </body>
 

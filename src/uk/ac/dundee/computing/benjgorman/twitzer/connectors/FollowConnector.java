@@ -370,6 +370,18 @@ public class FollowConnector
 			return Au;
 		}
 	}
+
+	public boolean removeFollower(String userName, String toFollow) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean removeFollowee(String userName, String toFollow) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
 

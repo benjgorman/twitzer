@@ -223,7 +223,65 @@ public class Follow extends HttpServlet
 
 		return args;
 		}
+    
+ // Logged in user unfollow user specified in URL
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		System.out.println("Test Success");
+		RequestDispatcher rd;
+		HttpSession session=request.getSession();
+		
+		UserStore us =(UserStore)session.getAttribute("User");
+		
+		String toFollow = null;
+		String args[]=SplitRequestPath(request);
+		String op=null;
+		
+		switch (args.length)
+		{
+			case 3: op=args[2];
+					break;
+		}
+	        if (op==null) 
+	        {
+	           
+	        	try
+	        	{
+	        		System.out.println("Can't unfollow this user.");
+	        	}
+	        	catch (Exception et)
+	        	{
+	        		System.out.println("Heres why: "+et);
+	        		return;
+	        	}
+	                     
+	            
+	            return;
+	        } 
+	        else
+	        {
+	            toFollow = op.toString();
+	        }
+		
+		
+		String userName = us.getUsername();
+		
+		FollowConnector fc = new FollowConnector();
+		try
+		{
+			System.out.println(userName + " wishes to unfollow" + toFollow);
+			
+			if (fc.removeFollower(userName, toFollow)==true && fc.removeFollowee(userName, toFollow)==true)
+			{
+				System.out.println("Successfulness");
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Unfollow didn't work: " + e);
+		}
 
+	}
 	  private StringTokenizer SplitString(String str)
 	  {
 	  		return new StringTokenizer (str,"/");

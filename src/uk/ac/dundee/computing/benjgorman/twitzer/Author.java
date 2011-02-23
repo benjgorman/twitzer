@@ -17,6 +17,8 @@ import javax.servlet.RequestDispatcher;
 import uk.ac.dundee.computing.benjgorman.twitzer.connectors.*;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.FollowStore;
+import uk.ac.dundee.computing.benjgorman.twitzer.stores.FolloweeStore;
+import uk.ac.dundee.computing.benjgorman.twitzer.stores.TweetStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 
 /**
@@ -43,49 +45,49 @@ public class Author extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String args[]= SplitRequestPath(request);
+		request.setAttribute("ViewUser", null);
 
-		switch (args.length)
-		{
-			case 3:
-				if (FormatsMap.containsKey(args[2])) 
-				{
+		String args[]=SplitRequestPath(request);
+
+		switch (args.length){
+
+			case 2: System.out.println("ALL AUTHORS");
+					break;
+			case 3: if (FormatsMap.containsKey(args[2]))
+			{
 					Integer IFormat= (Integer)FormatsMap.get(args[2]);
-					HttpSession session=request.getSession();
-					UserStore sessionUser = (UserStore)session.getAttribute("User");
-					
-					if (sessionUser != null && sessionUser.isloggedIn() == true)
-					{
+
 						switch((int)IFormat.intValue())
 						{
-							case 3:ReturnAuthor(request, response,3,sessionUser.getUsername()); //Only JSON implemented for now
-							break;
-						}
-	
-					}
-				}
-				break;
-	
-			case 4: 
-				if (FormatsMap.containsKey(args[3]))
-				{ //all users
-							Integer IFormat= (Integer)FormatsMap.get(args[3]);
-							
-							switch((int)IFormat.intValue())
-							{
-								case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON
+
+							 case 3:System.out.println("TEST");
 							 		break;
-								default:
-									break;
-							}
-				}
-				break;
-			default: 
-				System.out.println("Wrong number of arguements in doGet Author "+request.getRequestURI()+" : "+args.length);
-				break;
+							 default:break;
+						}
+					}
+			else
+			{ //Must be a single Author request
+						System.out.println("Call return Author");
+						ReturnAuthor(request, response,0,args[2]);
+						break;
+			}
+			break;
+
+			case 4: if (FormatsMap.containsKey(args[3]))
+			{ //all authors in a format
+						Integer IFormat= (Integer)FormatsMap.get(args[3]);
+						switch((int)IFormat.intValue()){
+						case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON implemented for now
+					 		break;
+						default:break;
+						}
+					}
+					break;
+			default: System.out.println("Wrong number of arguements in doGet Author "+request.getRequestURI()+" : "+args.length);
+					break;
 		}
 
-		
+
 	}
 
 	public void ReturnAuthor(HttpServletRequest request, HttpServletResponse response,int Format, String AuthorName) throws ServletException, IOException
@@ -98,15 +100,45 @@ public class Author extends HttpServlet
 		 * 
 		 */
 		UserConnector au = new UserConnector();
+		FollowConnector fc = new FollowConnector();
+		
         String email = au.getEmailFromUsername(AuthorName);
         
 		AuthorStore Author = au.getAuthorFromEmail(email);
+		
+		HttpSession session=request.getSession();
+		UserStore lc =(UserStore)session.getAttribute("User");
+		
 		
 		if (Author==null)
 		{
 			Author=new AuthorStore();
 			//Author.setname("Sorry name not found");
+			System.out.println("GOT HERE");
 			Format = 4;
+		}
+		
+
+		if (lc!=null)
+		{
+			List<FolloweeStore> fsl = fc.getFollowers(lc.getUsername());
+			System.out.println("TEST");
+			
+			for (FolloweeStore follow: fsl)
+			{
+				System.out.println("HELLO");
+				System.out.println("THIS " + follow.getUsername());
+				
+				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
+				{	
+					Author.setFollowing(true);
+				}
+				else
+				{
+					Author.setFollowing(false);
+				}	
+			}
+			
 		}
 		
 		System.out.println("Got Author "+Author.getname()+" : "+Format);

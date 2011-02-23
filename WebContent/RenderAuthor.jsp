@@ -16,7 +16,6 @@ scope="session"
 <body>
 
 <% 
-Boolean following = false;
 System.out.println("In RenderAuthor.jsp");
 AuthorStore Author = (AuthorStore)request.getAttribute("Author");
 
@@ -40,7 +39,7 @@ NumPosts: <%=Author.getnumPosts() %>
 }
 %>
 
-<%if (following == true)
+<%if (Author.getFollowing() == false)
 { %>
 <button id="follow">Follow</button>
 <%}
@@ -48,8 +47,17 @@ else
 { %>
 <button id="unfollow">Unfollow</button>
 <%}%>
-</body>
+<div id="test"></div>
+<div id="tweets"></div>
 <script>
+$.getJSON("/Twitzer/Tweet/<%=Author.getuserName()%>/json", function(json) {
+
+	$.each(json.Data, function(i, Data) {
+		
+		$("#tweets").append('<h3>' + this.Twit + this.Content + '</h3>');
+
+	  });
+	});
 $("#follow").click(function () {
 	$.ajax({
 		aysnc: true,
@@ -61,12 +69,12 @@ $("#follow").click(function () {
 				location.reload(); 
 			}
 	});
-	});
+});
 $("#unfollow").click(function () {
 	$.ajax({
 		aysnc: true,
-			type: "POST",
-			url: "/Twitzer/Unfollow/<%= Author.getuserName() %>",
+			type: "DELETE",
+			url: "/Twitzer/Follow/<%= Author.getuserName() %>",
 			dataType: "text",
 			success: function(msg)
 			{
@@ -75,4 +83,5 @@ $("#unfollow").click(function () {
 	});
 	});
 </script>
+</body>
 </html>
