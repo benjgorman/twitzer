@@ -16,9 +16,7 @@ import javax.servlet.RequestDispatcher;
 
 import uk.ac.dundee.computing.benjgorman.twitzer.connectors.*;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore;
-import uk.ac.dundee.computing.benjgorman.twitzer.stores.FollowStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.FolloweeStore;
-import uk.ac.dundee.computing.benjgorman.twitzer.stores.TweetStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 
 /**
@@ -27,7 +25,7 @@ import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 public class Author extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
-	 private HashMap FormatsMap = new HashMap();
+	 private HashMap<String, Integer> FormatsMap = new HashMap<String, Integer>();
     /**
      * Default constructor. 
      */
@@ -131,11 +129,11 @@ public class Author extends HttpServlet
 				
 				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
 				{	
-					Author.setFollowing(true);
+					Author.setFollowing("true");
 				}
 				else
 				{
-					Author.setFollowing(false);
+					Author.setFollowing("false");
 				}	
 			}
 			

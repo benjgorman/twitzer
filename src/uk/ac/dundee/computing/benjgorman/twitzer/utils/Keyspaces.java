@@ -1,10 +1,7 @@
 package uk.ac.dundee.computing.benjgorman.twitzer.utils;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.ddl.ColumnFamilyDefinition;
-import me.prettyprint.hector.api.ddl.ColumnType;
 import me.prettyprint.hector.api.ddl.KeyspaceDefinition;
-import me.prettyprint.hector.api.factory.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +10,22 @@ import me.prettyprint.cassandra.service.*;
 import me.prettyprint.hector.api.ddl.ComparatorType;
 import me.prettyprint.hector.api.*;
 
-public final class Keyspaces {
+public final class Keyspaces 
+{
 
 	
-	
-	public Keyspaces(){
+	public Keyspaces()
+	{
 		
 	}
-	public static void AddColumnFamilies(){
-		try{
-			ColumnFamilyDefinition cfDef = HFactory.createColumnFamilyDefinition("BloggyAppy", "DynCf");
-		}catch(Exception et){
+	public static void AddColumnFamilies()
+	{
+		try
+		{
+			ColumnFamilyDefinition cfDef = HFactory.createColumnFamilyDefinition("Twitzer", "DynCf");
+		}
+		catch(Exception et)
+		{
 			
 			System.out.println("I can't actually create that ColumnFamily right now, heres why: "+et);
 		}
@@ -116,7 +118,6 @@ public final class Keyspaces {
 				}
 				
 			}
-			
 			
 		}
 		catch(Exception et)

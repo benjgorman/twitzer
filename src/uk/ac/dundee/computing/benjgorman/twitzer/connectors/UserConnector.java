@@ -7,8 +7,6 @@ import me.prettyprint.hector.api.*;
 import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.HColumn;
  
-//import me.prettyprint.hector.api.beans.KeyspaceOperator;
-import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.query.ColumnQuery;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SliceQuery;
@@ -90,9 +88,6 @@ public class UserConnector
 		}
 		
 		ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
-		StringSerializer ss = StringSerializer.get();
-		
-		
 		try
 		{
 			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2

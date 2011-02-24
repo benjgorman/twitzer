@@ -48,14 +48,14 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>Unfollow</display-name>
-    <servlet-name>Unfollow</servlet-name>
-    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Unfollow</servlet-class>
+    <display-name>Timeline</display-name>
+    <servlet-name>Timeline</servlet-name>
+    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Timeline</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Unfollow</servlet-name>
-    <url-pattern>/Unfollow</url-pattern>
-    <url-pattern>/Unfollow/*</url-pattern>
+    <servlet-name>Timeline</servlet-name>
+    <url-pattern>/Timeline</url-pattern>
+    <url-pattern>/Timeline/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

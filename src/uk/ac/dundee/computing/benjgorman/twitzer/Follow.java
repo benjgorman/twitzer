@@ -15,14 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.expressme.openid.Association;
-import org.expressme.openid.Authentication;
-import org.expressme.openid.Endpoint;
-
 import uk.ac.dundee.computing.benjgorman.twitzer.connectors.FollowConnector;
-import uk.ac.dundee.computing.benjgorman.twitzer.connectors.UserConnector;
-import uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore;
-import uk.ac.dundee.computing.benjgorman.twitzer.stores.FollowStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.FolloweeStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 

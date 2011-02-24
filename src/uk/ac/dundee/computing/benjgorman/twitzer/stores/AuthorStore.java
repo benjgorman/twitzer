@@ -10,19 +10,19 @@ public class AuthorStore
 	private String avatar ="";
 	private String webUrl = "";
 	private String tel ="";
-	private Boolean following = false;
+	private String following = "";
 	
 	public AuthorStore()
 	{
 	
 	}
 	
-	public void setFollowing(Boolean following)
+	public void setFollowing(String following)
 	{
 		this.following=following;
 	}
 	
-	public Boolean getFollowing()
+	public String getFollowing()
 	{
 		return following;
 	}

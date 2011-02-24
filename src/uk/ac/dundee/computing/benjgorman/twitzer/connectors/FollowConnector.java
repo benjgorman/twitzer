@@ -239,8 +239,6 @@ public class FollowConnector
 		}
 		
 		ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
-		StringSerializer ss = StringSerializer.get();
-		
 		try
 		{
 			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2

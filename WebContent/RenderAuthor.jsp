@@ -38,18 +38,30 @@ NumPosts: <%=Author.getnumPosts() %>
 <% 
 }
 %>
-
-<%if (Author.getFollowing() == false)
-{ %>
-<button id="follow">Follow</button>
-<%}
-else
-{ %>
-<button id="unfollow">Unfollow</button>
-<%}%>
+<div id="followButton"></div>
 <div id="test"></div>
 <div id="tweets"></div>
 <script>
+$(function() {followLoad();});
+function followLoad ()
+{
+	$.getJSON("/Twitzer/Author/<%=Author.getuserName()%>/json", function(json) 
+	{
+			$("#followButton").empty();
+			var test="true";
+			var test2=json.Following;
+			
+			if (test2==test)
+			{
+				$("#followButton").append('<button id="unfollow">Unfollow</button>');
+			}
+			else
+			{
+				$("#followButton").append('<button id="follow">Follow</button>');
+			}
+
+		  });
+}
 $.getJSON("/Twitzer/Tweet/<%=Author.getuserName()%>/json", function(json) {
 
 	$.each(json.Data, function(i, Data) {
@@ -58,7 +70,7 @@ $.getJSON("/Twitzer/Tweet/<%=Author.getuserName()%>/json", function(json) {
 
 	  });
 	});
-$("#follow").click(function () {
+$("#follow").live('click', function () {
 	$.ajax({
 		aysnc: true,
 			type: "POST",
@@ -66,11 +78,11 @@ $("#follow").click(function () {
 			dataType: "text",
 			success: function(msg)
 			{
-				location.reload(); 
+				 followLoad();
 			}
 	});
 });
-$("#unfollow").click(function () {
+$("#unfollow").live('click', function () {
 	$.ajax({
 		aysnc: true,
 			type: "DELETE",
@@ -78,7 +90,7 @@ $("#unfollow").click(function () {
 			dataType: "text",
 			success: function(msg)
 			{
-				location.reload(); 
+				followLoad();
 			}
 	});
 	});

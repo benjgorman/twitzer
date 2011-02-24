@@ -30,7 +30,6 @@ scope="session"
 <input type="submit" value="Tweet"/>
 </form>
 <hr></hr>
-<div id="tweets"></div>
 <script>
 $.getJSON('/Twitzer/Tweet/json', function(json) {
 
