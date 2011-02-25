@@ -70,6 +70,17 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>Logout</display-name>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+    <url-pattern>/Logout/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>Login</display-name>
     <servlet-name>Login</servlet-name>
     <servlet-class>uk.ac.dundee.computing.benjgorman.twitzer.Login</servlet-class>

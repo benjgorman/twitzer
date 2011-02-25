@@ -28,8 +28,7 @@ else
 {
 %>
 <h1><%=Author.getuserName()%></h1>
-<img src=<%=Author.getAvatar() %> alt="<%=Author.getuserName() %>" /> <br/>
-<p><a href="/Twitzer/Post/<%=Author.getuserName() %>">All Posts by <%=Author.getname() %> (<%=Author.getuserName() %>)</a><br/>
+<img src=<%=Author.getAvatar() %> alt="<%=Author.getuserName() %>" height=40pixels width=40pixels/> <br/>
 Name:	<%=Author.getname() %><br/>
 Email:	<%=Author.getEmail() %>  <br/>
 Telephone:  <%=Author.getTel() %>  <br/>
@@ -38,6 +37,9 @@ NumPosts: <%=Author.getnumPosts() %>
 <% 
 }
 %>
+<a href="/Twitzer/Follow/<%=Author.getuserName()%>">Following</a>
+<a href="/Twitzer/Follows/<%=Author.getuserName()%>">Followers</a>
+
 <div id="followButton"></div>
 <div id="test"></div>
 <div id="tweets"></div>

@@ -57,14 +57,13 @@ public  final class CassandraHosts {
 		  
 		   return sHosts;
 	}
-	public static Cluster getCluster(){
+	public static Cluster getCluster()
+	{
 		System.out.println("getCluster");
 		
 			c = HFactory.getOrCreateCluster("Test Cluster", Host+":9160");
 			getHosts();
 			Keyspaces.SetUpKeySpaces(c);
-		
-		
 		
 		return c;
 		

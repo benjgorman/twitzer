@@ -51,7 +51,8 @@ public class Author extends HttpServlet
 
 			case 2: System.out.println("ALL AUTHORS");
 					break;
-			case 3: if (FormatsMap.containsKey(args[2]))
+			case 3: 
+			if (FormatsMap.containsKey(args[2]))
 			{
 					Integer IFormat= (Integer)FormatsMap.get(args[2]);
 
@@ -119,14 +120,10 @@ public class Author extends HttpServlet
 
 		if (lc!=null)
 		{
-			List<FolloweeStore> fsl = fc.getFollowers(lc.getUsername());
-			System.out.println("TEST");
+			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
 			
 			for (FolloweeStore follow: fsl)
-			{
-				System.out.println("HELLO");
-				System.out.println("THIS " + follow.getUsername());
-				
+			{				
 				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
 				{	
 					Author.setFollowing("true");

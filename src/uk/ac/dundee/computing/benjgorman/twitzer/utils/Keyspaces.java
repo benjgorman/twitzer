@@ -18,18 +18,7 @@ public final class Keyspaces
 	{
 		
 	}
-	public static void AddColumnFamilies()
-	{
-		try
-		{
-			ColumnFamilyDefinition cfDef = HFactory.createColumnFamilyDefinition("Twitzer", "DynCf");
-		}
-		catch(Exception et)
-		{
-			
-			System.out.println("I can't actually create that ColumnFamily right now, heres why: "+et);
-		}
-	}
+	
 	public static void SetUpKeySpaces(Cluster c)
 	{
 		try

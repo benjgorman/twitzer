@@ -22,20 +22,22 @@ scope="session"
 
 <h3> <%if (User.isloggedIn()==true)%><%=User.getUsername() %> </h3>
 <h3> <%if (User.isloggedIn()==true)%><%=User.getNumPosts() %> </h3>
+<a href="Logout">Logout</a>
 <%if (User.isloggedIn()==true) {%> <img src=<%=User.getAvatar() %> alt="<%=User.getUsername() %>" height=40pixels width=40pixels/><%} %>
 
 <form id="tweet" action="/Twitzer/Tweet" method="POST"> 
 
-<textarea name="Content" placeholder="whats happening?"></textarea>
+<textarea name="Content" placeholder="Whats happening where you are?"></textarea>
 <input type="submit" value="Tweet"/>
+<div id="timeline"></div>
 </form>
 <hr></hr>
 <script>
-$.getJSON('/Twitzer/Tweet/json', function(json) {
+$.getJSON("/Twitzer/Timeline/json", function(json) {
 
 	$.each(json.Data, function(i, Data) {
 		
-		$("#tweets").append('<h3>' + this.Twit + this.Content + '</h3>'); 
+		$("#timeline").prepend('<div id="tweet" float: left><img src= '+this.AvatarUrl +' height=40pixels width=40pixels/><a href="/Twitzer/Author/'+this.Twit+'">'+this.Twit+' </a>'+this.Content+'</div>');
 
 	  });
 	});

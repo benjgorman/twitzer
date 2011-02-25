@@ -165,9 +165,7 @@ public class Login extends HttpServlet
 		//Check to see if user is registered,  You can login but not be registered
 		UserConnector au = new UserConnector();
 		
-		AuthorStore ars=au.getAuthorFromEmail(Email);
-		System.out.println("LOOK HERE !!!!!!!!!!!!!!!: " + ars.getuserName());
-		
+		AuthorStore ars=au.getAuthorFromEmail(Email);		
 		
 		if (ars == null || ars.getuserName() == "")
 		{
@@ -194,7 +192,7 @@ public class Login extends HttpServlet
 			
 			try
 			{
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("/Twitzer/");
 		
 			}
 			catch(Exception et)

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import uk.ac.dundee.computing.benjgorman.twitzer.connectors.FollowConnector;
+import uk.ac.dundee.computing.benjgorman.twitzer.connectors.UserConnector;
+import uk.ac.dundee.computing.benjgorman.twitzer.stores.AuthorStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.FolloweeStore;
 import uk.ac.dundee.computing.benjgorman.twitzer.stores.UserStore;
 
@@ -66,6 +68,12 @@ public class Follow extends HttpServlet
 	
 					}
 				}
+				else
+				{ 
+						System.out.println("Call return Author");
+						ReturnAuthor(request, response,0,args[2]);
+						break;
+				}
 				break;
 	
 			case 4: 
@@ -89,6 +97,80 @@ public class Follow extends HttpServlet
 
 	}
 	
+	public void ReturnAuthor(HttpServletRequest request, HttpServletResponse response,int Format, String AuthorName) throws ServletException, IOException
+	{
+		/*  Format is one of
+		 *  0 jsp
+		 *  1 xml
+		 *  2 rss
+		 *  3 json
+		 * 
+		 */
+		UserConnector au = new UserConnector();
+		FollowConnector fc = new FollowConnector();
+		
+        String email = au.getEmailFromUsername(AuthorName);
+        
+		AuthorStore Author = au.getAuthorFromEmail(email);
+		
+		HttpSession session=request.getSession();
+		UserStore lc =(UserStore)session.getAttribute("User");
+		
+		
+		if (Author==null)
+		{
+			Author=new AuthorStore();
+			//Author.setname("Sorry name not found");
+			System.out.println("GOT HERE");
+			Format = 4;
+		}
+		
+
+		if (lc!=null)
+		{
+			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
+			
+			for (FolloweeStore follow: fsl)
+			{				
+				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
+				{	
+					Author.setFollowing("true");
+				}
+				else
+				{
+					Author.setFollowing("false");
+				}	
+			}
+			
+		}
+		
+		System.out.println("Got Author "+Author.getname()+" : "+Format);
+		System.out.flush();
+		
+		switch(Format)
+		{
+			case 0: request.setAttribute("Author", Author);
+					RequestDispatcher rd=request.getRequestDispatcher("/Following.jsp");
+					rd.forward(request,response);
+					break;
+					
+			case 3: request.setAttribute("Data", Author);
+					RequestDispatcher rdjson=request.getRequestDispatcher("/RenderJson");
+					rdjson.forward(request,response);
+					
+					break;
+					
+			case 4: request.setAttribute("Null", Author);
+					RequestDispatcher rdnull=request.getRequestDispatcher("/NullAuthor.jsp");
+					rdnull.forward(request,response);
+					break;
+					
+			default: System.out.println("Invalid Format in ReturnAllAuthors ");
+		}
+
+
+	}
+	
 	public void GetFollowers(HttpServletRequest request, HttpServletResponse response,int Format, String username) throws ServletException, IOException
 	{
 		HttpSession session=request.getSession();
@@ -96,7 +178,7 @@ public class Follow extends HttpServlet
 		
 		FollowConnector fc = new FollowConnector();
 		
-		List<FolloweeStore> followers = fc.getFollowers(username);
+		List<FolloweeStore> followers = fc.getFollowing(username);
 		List<FolloweeStore> followerList = new LinkedList<FolloweeStore>();
 		
 		if (followers != null && followers.size() > 0)

@@ -129,58 +129,6 @@ public class FollowConnector
 		}
 	}
 	
-	public List<FolloweeStore> getFollowers(String username)
-	{
-		Cluster c; //V2
-		try
-		{
-			c=CassandraHosts.getCluster();
-		}
-		catch (Exception et)
-		{
-			System.out.println("Can't find her sorry"+et);
-			return null;
-		}
-		try
-		{
-			List<FolloweeStore> results = new ArrayList<FolloweeStore>();
-			ConsistencyLevelPolicy mcl = new MyConsistancyLevel();
-			
-			Keyspace ks = HFactory.createKeyspace("Twitzer", c);  //V2
-			ks.setConsistencyLevelPolicy(mcl);
-			StringSerializer se = StringSerializer.get();
-			SliceQuery<String, String, String> q = HFactory.createSliceQuery(ks, se, se, se);
-			
-			q.setColumnFamily("Following")
-			.setKey(username)
-			.setRange("", "", false, 3);
-			
-			QueryResult<ColumnSlice<String, String>> r = q.execute();
-			ColumnSlice<String, String> slice = r.get();
-			List<HColumn<String, String>> slices = slice.getColumns();
-			
-			
-			for (HColumn<String, String> column: slices)
-			{
-				FolloweeStore result = new FolloweeStore();
-				result.setUsername(column.getName());
-				
-				if (column.getValue() != null && !column.getValue().equals(""))
-				{
-					result.setDate(Long.parseLong(column.getValue()));
-				}
-				
-				results.add(result);
-			}
-			return results;
-		}
-		catch (Exception e) 
-		{
-			System.out.println("sad face :(" + e);
-			return null;
-		}
-	}
-	
 	public Boolean Follow(String userName, String toFollow)
 	{
 		Cluster c;
