@@ -28,7 +28,7 @@ scope="session"
 			<div class="nav clear">
 				<ul>
 					<li><a href="/Twitzer/">Home</a>
-					<li><a href="Logout">Logout</a>
+					<li><a href="/Twitzer/Logout">Logout</a>
 				</ul>
 			</div>
 			

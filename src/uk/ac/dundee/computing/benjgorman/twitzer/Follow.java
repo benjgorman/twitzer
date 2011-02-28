@@ -43,8 +43,6 @@ public class Follow extends HttpServlet
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    // /json return followers formatted as Json for logged in user 
-    // /[username]/json - return followers formatted as Json for specified user 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String args[]= SplitRequestPath(request);
@@ -97,15 +95,12 @@ public class Follow extends HttpServlet
 
 	}
 	
+	/*
+	 * Returns a list of those a user is following in jsp/json
+	 * 
+	 */
 	public void ReturnAuthor(HttpServletRequest request, HttpServletResponse response,int Format, String AuthorName) throws ServletException, IOException
 	{
-		/*  Format is one of
-		 *  0 jsp
-		 *  1 xml
-		 *  2 rss
-		 *  3 json
-		 * 
-		 */
 		UserConnector au = new UserConnector();
 		FollowConnector fc = new FollowConnector();
 		
@@ -116,12 +111,9 @@ public class Follow extends HttpServlet
 		HttpSession session=request.getSession();
 		UserStore lc =(UserStore)session.getAttribute("User");
 		
-		
 		if (Author==null)
 		{
 			Author=new AuthorStore();
-			//Author.setname("Sorry name not found");
-			System.out.println("GOT HERE");
 			Format = 4;
 		}
 		
@@ -132,18 +124,27 @@ public class Follow extends HttpServlet
 				lc.setUsername("");
 			}
 			
+			
 			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
 			
-			for (FolloweeStore follow: fsl)
-			{				
-				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
-				{	
-					Author.setFollowing("true");
+			if (fsl!=null)
+			{	
+				
+				for (FolloweeStore follow: fsl)
+				{				
+					if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
+					{	
+						Author.setFollowing("true");
+					}
+					else
+					{
+						Author.setFollowing("false");
+					}	
 				}
-				else
-				{
-					Author.setFollowing("false");
-				}	
+			}
+			else
+			{
+				Author.setFollowing("false");
 			}
 			
 		}
@@ -175,10 +176,12 @@ public class Follow extends HttpServlet
 					
 			default: System.out.println("Invalid Format in ReturnAllAuthors ");
 		}
-
-
 	}
 	
+	/*
+	 * Actually gets the followers
+	 * 
+	 */
 	public void GetFollowers(HttpServletRequest request, HttpServletResponse response,int Format, String username) throws ServletException, IOException
 	{
 		HttpSession session=request.getSession();
@@ -217,8 +220,9 @@ public class Follow extends HttpServlet
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	/*
+	 * Follows the user specified for the logged in user
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -260,8 +264,8 @@ public class Follow extends HttpServlet
 		
 		String userName = us.getUsername();
 		
-		System.out.println(userName+ "is to FOLLOW:" + toFollow);
-		System.out.println(toFollow+ "is being FOLLOWED by:" +userName);
+		System.out.println(userName+ " is to FOLLOW: " + toFollow);
+		System.out.println(toFollow+ " is being FOLLOWED by: " +userName);
 		
 		FollowConnector fc = new FollowConnector();
 
@@ -307,26 +311,26 @@ public class Follow extends HttpServlet
 		return args;
 		}
     
- // Logged in user unfollow user specified in URL
+    /*
+	 * Unfollows the user specified for the logged in user.
+	 * 
+	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		System.out.println("Test Success");
 		HttpSession session=request.getSession();
-		
 		UserStore us =(UserStore)session.getAttribute("User");
 		
 		String toFollow = null;
 		String args[]=SplitRequestPath(request);
-		String op=null;
+		String ex=null;
 		
 		switch (args.length)
 		{
-			case 3: op=args[2];
+			case 3: ex=args[2];
 					break;
 		}
-	        if (op==null) 
+	        if (ex==null) 
 	        {
-	           
 	        	try
 	        	{
 	        		System.out.println("Can't unfollow this user.");
@@ -342,7 +346,7 @@ public class Follow extends HttpServlet
 	        } 
 	        else
 	        {
-	            toFollow = op.toString();
+	            toFollow = ex.toString();
 	        }
 		
 		
@@ -367,7 +371,6 @@ public class Follow extends HttpServlet
 	  private StringTokenizer SplitString(String str)
 	  {
 	  		return new StringTokenizer (str,"/");
-
 	  }
 
 

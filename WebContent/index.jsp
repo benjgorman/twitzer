@@ -20,7 +20,7 @@ scope="session"
 
 
 <body>
-	<section id="page">
+	<div class id="page">
 	<div class ="header">
 	
 		<h1>Twitzer</h1>			
@@ -59,7 +59,7 @@ scope="session"
 <div id="timeline"></div>
 <br>
 <br>
-</section>
+</div>
 
 		<div class="footer">
 

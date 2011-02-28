@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="/Twitzer/style.css" />
 </head>
 <body>
-<section id="page">
+<div class id="page">
 	<div class ="header">
 	
 		<h1>Twitzer</h1>			
@@ -19,18 +19,24 @@
 			</div>
 			
 	</div>
-<h2>Sign on with OpenID from:</h2>
+	<br>
+<div class id="logos">
+<h2>You need to sign in to use Twitzer, we like to keep things private,</h2>
+<h2>Choose an account provider below...</h2>
+</div>
 <br>
+<div class id="logos">
   <p>
   	<a href="Login/Google">
  	 <img src="images/google.png" alt="Google"/>
   		</a>
-  </p>
-  <p>
+  	<h2> Or </h2>
+  	<br>
   	<a href="Login/Yahoo">
  	 <img src="images/yahoo.png" alt="Yahoo"/>
   		</a>
   </p>
-
+  </div>
+</div>
 </body>
 </html>

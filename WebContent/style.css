@@ -124,7 +124,15 @@ div.nav, div.article, div.nav ul li a,div.figure{
 
 /* Article styles: */
 
-#page{
+#logos
+{
+	text-align: center;
+	margin:0 auto;
+	position:center;
+}
+
+#page
+{
 	width:960px;
 	margin:0 auto;
 	position:relative;

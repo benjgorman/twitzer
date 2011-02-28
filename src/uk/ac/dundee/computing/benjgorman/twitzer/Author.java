@@ -32,10 +32,10 @@ public class Author extends HttpServlet
     public Author() 
     {
         // TODO Auto-generated constructor stub
-    	 FormatsMap.put("Jsp", 0);
+    	 FormatsMap.put("Jsp", 0); 
     	 FormatsMap.put("xml", 1);
     	 FormatsMap.put("rss", 2);
-    	 FormatsMap.put("json",3);
+    	 FormatsMap.put("json",3); //only once which works
     }
 
 	/**
@@ -49,7 +49,7 @@ public class Author extends HttpServlet
 
 		switch (args.length){
 
-			case 2: System.out.println("ALL AUTHORS");
+			case 2: System.out.println("All Users");
 					break;
 			case 3: 
 			if (FormatsMap.containsKey(args[2]))
@@ -58,14 +58,13 @@ public class Author extends HttpServlet
 
 						switch((int)IFormat.intValue())
 						{
-
-							 case 3:System.out.println("TEST");
+							 case 3:System.out.println("Testing");
 							 		break;
 							 default:break;
 						}
 					}
 			else
-			{ //Must be a single Author request
+			{ 
 						System.out.println("Call return Author");
 						ReturnAuthor(request, response,0,args[2]);
 						break;
@@ -73,33 +72,31 @@ public class Author extends HttpServlet
 			break;
 
 			case 4: if (FormatsMap.containsKey(args[3]))
-			{ //all authors in a format
+			{
 						Integer IFormat= (Integer)FormatsMap.get(args[3]);
-						switch((int)IFormat.intValue()){
-						case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON implemented for now
-					 		break;
-						default:break;
+						switch((int)IFormat.intValue())
+						{
+							case 3:ReturnAuthor(request, response,3,args[2]); //Only JSON implemented for now
+						 		break;
+							default:break;
 						}
 					}
 					break;
-			default: System.out.println("Wrong number of arguements in doGet Author "+request.getRequestURI()+" : "+args.length);
+			default: System.out.println("Wrong number of arguements, error: "+request.getRequestURI()+" : "+args.length);
 					break;
 		}
 
 
 	}
 
+	/*
+	 * Returns an Author based on a username supplied.
+	 * 
+	 */
 	public void ReturnAuthor(HttpServletRequest request, HttpServletResponse response,int Format, String AuthorName) throws ServletException, IOException
 	{
-		/*  Format is one of
-		 *  0 jsp
-		 *  1 xml
-		 *  2 rss
-		 *  3 json
-		 * 
-		 */
 		UserConnector au = new UserConnector();
-		FollowConnector fc = new FollowConnector();
+		FollowConnector fc = new FollowConnector(); //needed to we can check if the user who is viewing the author page is following them
 		
         String email = au.getEmailFromUsername(AuthorName);
         
@@ -108,29 +105,34 @@ public class Author extends HttpServlet
 		HttpSession session=request.getSession();
 		UserStore lc =(UserStore)session.getAttribute("User");
 		
-		
 		if (Author==null)
 		{
 			Author=new AuthorStore();
-			//Author.setname("Sorry name not found");
-			System.out.println("GOT HERE");
 			Format = 4;
 		}
 		
+		//cycle through the logged in users following list, to see if we can get the user they are looking at
 		if (lc!=null && lc.getUsername()!= null)
 		{
 			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
 			
-			for (FolloweeStore follow: fsl)
-			{				
-				if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
-				{	
-					Author.setFollowing("true");
+			if (fsl!=null)
+			{
+				for (FolloweeStore follow: fsl)
+				{				
+					if (follow.getUsername().equalsIgnoreCase(Author.getuserName()))
+					{	
+						Author.setFollowing("true");
+					}
+					else
+					{
+						Author.setFollowing("false");
+					}	
 				}
-				else
-				{
-					Author.setFollowing("false");
-				}	
+			}
+			else
+			{
+				Author.setFollowing("false");
 			}
 			
 		}
@@ -163,16 +165,14 @@ public class Author extends HttpServlet
 			default: System.out.println("Invalid Format in ReturnAllAuthors ");
 		}
 
-
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	/*
+	 * Sets up a users account. Setting their data taken from the RegisterUser page.
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
-		// TODO Auto-generated method stub
 		AuthorStore Author =new AuthorStore();
 		RequestDispatcher rd;
 		HttpSession session=request.getSession();
@@ -181,29 +181,41 @@ public class Author extends HttpServlet
 
 		if (lc==null)
 		{
+			//if not logged in then send them to the register page
 			rd=request.getRequestDispatcher("RegisterUser.jsp");
 			rd.forward(request,response);
 		}
 
+		//escape HTML to make sure we have no nasty stuff in our text fields.
+		//we are setting up a users account here in an author store
 		Author.setemailName(lc.getemail());
 		Author.setname(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Name")));
 		Author.setAddress(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Website")));
-		Author.setAvatar(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Avatar")));
+		
+		if (request.getParameter("Avatar")=="null" || request.getParameter("Avatar")=="")
+		{
+			Author.setAvatar("/Twitzer/images/Blank_Avatar_1.jpg");
+		}
+		else
+		{
+			Author.setAvatar(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Avatar")));
+		}
+		
 		Author.setUserName(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Username")));
 		Author.setBio(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Bio")));
 		Author.setTel(org.apache.commons.lang.StringEscapeUtils.escapeHtml(request.getParameter("Tel")));
 
 		UserConnector au = new UserConnector();
 
-
+		//if we have added them, lets sign them in
 		if (au.addAuthor(Author)== true)
 		{
 			lc.setloggedIn(Author.getname(), Author.getEmail(), Author.getAvatar(), Author.getuserName());
-			rd=request.getRequestDispatcher("index.jsp");
-			rd.forward(request,response);
-			//ReturnAllAuthors(request,response,0);  //Return as Jsp only
-		}else{
-			rd=request.getRequestDispatcher("RegisterUser.jsp");
+			response.sendRedirect("/Twitzer/");
+		}
+		else // if its not worked then send them back to register, something must have borked
+		{
+			rd=request.getRequestDispatcher("/Twitzer/RegisterUser.jsp");
 			rd.forward(request,response);
 		}
 

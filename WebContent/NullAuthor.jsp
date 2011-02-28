@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="uk.ac.dundee.computing.benjgorman.twitzer.stores.*" %>
 <%@ page import="java.util.*" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<section id="page">
+<div class id="page">
 	<div class ="header">
 	
 		<h1>Twitzer</h1>			
@@ -36,6 +36,6 @@ if (Author==null){
 }
 %>
 <h2>Sorry, that user does not exist.</h2>
-</section>
+</div>
 </body>
 </html>
