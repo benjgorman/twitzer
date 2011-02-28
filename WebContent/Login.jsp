@@ -4,13 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Twitzer Login</title>
-<link rel="stylesheet" href="style.css" /> 
-
+<title>Twitzer / Login</title>
+<link rel="stylesheet" type="text/css" media="all" href="/Twitzer/style.css" />
 </head>
 <body>
-
-<h1>Sign on with OpenID from:</h1>
+<section id="page">
+	<div class ="header">
+	
+		<h1>Twitzer</h1>			
+			<div class="nav clear">
+				<ul>
+					<li><a href="About">About</a>
+				</ul>
+			</div>
+			
+	</div>
+<h2>Sign on with OpenID from:</h2>
+<br>
   <p>
   	<a href="Login/Google">
  	 <img src="images/google.png" alt="Google"/>

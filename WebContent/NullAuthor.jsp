@@ -7,10 +7,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>That user doesn't exist</title>
-<link rel="stylesheet" href="style.css" /> 
+<link rel="stylesheet" type="text/css" media="all" href="/Twitzer/style.css" /> 
 
 </head>
 <body>
+
+<section id="page">
+	<div class ="header">
+	
+		<h1>Twitzer</h1>			
+			<div class="nav clear">
+				<ul>
+					<li><a href="/Twitzer/">Home</a>
+					<li><a href="Logout">Logout</a>
+				</ul>
+			</div>
+			
+	</div>
 <% 
 
 System.out.println("In RenderAuthor.jsp");
@@ -18,10 +31,11 @@ AuthorStore Author = (AuthorStore)request.getAttribute("Author");
 
 if (Author==null){
 %>
-	<h1>Error no Author returned</h1>
+	<h1>Whoa dude!</h1>
 <% 
 }
 %>
-<h1>Sorry, that user does not exist.</h1>
+<h2>Sorry, that user does not exist.</h2>
+</section>
 </body>
 </html>

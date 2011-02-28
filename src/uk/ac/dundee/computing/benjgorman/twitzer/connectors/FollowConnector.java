@@ -51,7 +51,7 @@ public class FollowConnector
 			
 			q.setColumnFamily("Following")
 			.setKey(username)
-			.setRange("", "", false, 3);
+			.setRange("", "", false, 100);
 			
 			QueryResult<ColumnSlice<String, String>> r = q.execute();
 			ColumnSlice<String, String> slice = r.get();
@@ -101,7 +101,7 @@ public class FollowConnector
 			
 			q.setColumnFamily("FollowedBy")
 			.setKey(username)
-			.setRange("", "", false, 3);
+			.setRange("", "", false, 100);
 			
 			QueryResult<ColumnSlice<String, String>> r = q.execute();
 			ColumnSlice<String, String> slice = r.get();

@@ -125,9 +125,13 @@ public class Follow extends HttpServlet
 			Format = 4;
 		}
 		
-
-		if (lc!=null)
+		if (lc!=null && lc.getUsername()!= null)
 		{
+			if (lc.getUsername() == null)
+			{
+				lc.setUsername("");
+			}
+			
 			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
 			
 			for (FolloweeStore follow: fsl)
@@ -143,6 +147,10 @@ public class Follow extends HttpServlet
 			}
 			
 		}
+		else
+		{
+			Author.setFollowing("false");
+		}	
 		
 		System.out.println("Got Author "+Author.getname()+" : "+Format);
 		System.out.flush();

@@ -25,7 +25,7 @@ import me.prettyprint.cassandra.service.*;
 
 public  final class CassandraHosts {
 	static Cluster c=null;
-	static String Host ="127.0.0.1";
+	static String Host ="134.36.36.84";
 	public CassandraHosts(){
 		
 	}
@@ -37,7 +37,7 @@ public  final class CassandraHosts {
 	public static String[] getHosts(){
 		  if (c==null){
 			  System.out.println("Creating cluster connection");
-			c = HFactory.getOrCreateCluster("Test Cluster", Host+":9160");
+			c = HFactory.getOrCreateCluster("CassabdraStarbase", Host+":9160");
 		  }
 			System.out.println(c.describeClusterName());
 		
@@ -61,7 +61,7 @@ public  final class CassandraHosts {
 	{
 		System.out.println("getCluster");
 		
-			c = HFactory.getOrCreateCluster("Test Cluster", Host+":9160");
+			c = HFactory.getOrCreateCluster("CassabdraStarbase", Host+":9160");
 			getHosts();
 			Keyspaces.SetUpKeySpaces(c);
 		

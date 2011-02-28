@@ -117,8 +117,7 @@ public class Author extends HttpServlet
 			Format = 4;
 		}
 		
-
-		if (lc!=null)
+		if (lc!=null && lc.getUsername()!= null)
 		{
 			List<FolloweeStore> fsl = fc.getFollowing(lc.getUsername());
 			
@@ -135,6 +134,10 @@ public class Author extends HttpServlet
 			}
 			
 		}
+		else
+		{
+			Author.setFollowing("false");
+		}	
 		
 		System.out.println("Got Author "+Author.getname()+" : "+Format);
 		System.out.flush();
