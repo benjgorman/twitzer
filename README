@@ -1,0 +1,54 @@
+--------------------------------------------------------------
+Author Servlet!
+
+Post - No arguments - adds the user in the session to the database. 
+(if no user is in the session it forwards to the registration page)
+
+Get - No arguments - shows user page if logged in.
+/json - shows your details in json format if you are logged in.
+/[username]  - shows a specific user page.
+/[username]/json shows a specific users details in json format.
+
+Delete - Not implemented :(
+---------------------------------------------------------------
+Follow Servlet
+
+Post
+/[username] - adds the user specified to those who the logged in user follows
+
+Get
+/json return followers formatted as Json for logged in user
+/[username]/json - return followers formatted as Json for specified user
+
+Delete - deletes the user specified to those who the logged in user follows
+---------------------------------------------------------------
+Follows Servlet
+
+Get
+/json return following formatted as Json for logged in user
+/[username]/json - return following formatted as Json for specified user
+---------------------------------------------------------------
+Login Servlet
+
+Get
+No arguments - check sign on result from Google or Yahoo
+/Google or /Yahoo - redirect to Google or Yahoo sign on page:
+---------------------------------------------------------------
+Logout Servlet
+
+Get
+Invalidates the session with the effect of logging out the user.
+---------------------------------------------------------------
+Timeline Servlet
+
+Get
+no parameters - redirects to homepage to show tweets
+/json returns the logged in users feed as json
+---------------------------------------------------------------
+Tweet Servlet
+
+Get
+/json returns tweets formatted as json for logged in user
+/[username]/json returns tweets formatted as json for specified user
+Post
+adds a tweet for the logged in user
